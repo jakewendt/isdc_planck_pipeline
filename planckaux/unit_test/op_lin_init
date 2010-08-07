@@ -1,0 +1,46 @@
+#
+#	This "shell script" can be source'd or .'d, depending on which shell you are in.
+#	Because of this, I need to use envv and envv makes its decisions base on the value
+#	of the $SHELL variable.  Therefore, it MUST be set correctly to work.
+#	By doing both setenv and export, the value will be set correctly since only one
+#	will work.
+
+setenv SHELL tcsh 		#	works in tcsh, but errors in sh ( this is needed bc most people use tcsh )
+
+SHELL=sh; export SHELL 	#	works in sh, but errors in tcsh ( this is needed bc cron jobs run sh )
+
+#
+#
+#
+
+eval `envv set WORK_ENV /home/isdc_guest/isdc_int/planck/WORK_ENV`
+eval `envv set ROOTSYS /unsaved_data/root/5.02.00/lin`
+
+#echo $PATH | awk -F: '{for (i=1;i<=NF;i++) printf ($i"\n");}'
+eval `envv add PATH ${ROOTSYS}/bin  1`
+eval `envv add PATH ${WORK_ENV}/bin 1`
+
+#echo $LD_LIBRARY_PATH | awk -F: '{for (i=1;i<=NF;i++) printf ($i"\n");}'
+eval `envv add LD_LIBRARY_PATH /planck/dev/public_sw/bin/lib/graphviz 1`
+eval `envv add LD_LIBRARY_PATH ${ROOTSYS}/lib 1`
+
+eval `envv set PFILES "/home/isdc_guest/isdc_int/planck/pfiles;${WORK_ENV}/pfiles"`
+eval `envv set CFITSIO_INCLUDE_FILES ${WORK_ENV}/templates`
+eval `envv set L1_ARCHIVE /home/isdc_guest/isdc_int/planck/L1_ARCHIVE`
+eval `envv set CC gcc`
+eval `envv set CXX g++`
+
+
+#	eval `envv set AT_MOC TRUE`	#	use this when running the planckl1 pipeline at MOC (it will only run tmu)
+
+#
+#	DO NOT PUT TRAILING / AFTER THIS DIRS!
+#
+eval `envv set PIPELINES ${WORK_ENV}/pipelines`
+eval `envv set LOG_DIR   ${L1_ARCHIVE}/logs`
+eval `envv set CRON_LOGS ${L1_ARCHIVE}/cronlogs`
+eval `envv set AUX_INPUT ${L1_ARCHIVE}/ifts/inbox`
+eval `envv set TM_INPUT  ${L1_ARCHIVE}/tm/trigger`
+
+
+#	last line

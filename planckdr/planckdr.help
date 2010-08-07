@@ -1,0 +1,19 @@
+
+		Planck Data Receipt Pipeline Version %VERSION%
+
+
+
+dr-crontab
+
+	This cron job runs every 5 minutes (unless the user modified this) 
+	and calls dr_start.pl
+
+
+dr_start.pl
+
+	This script calls tm_request and tm_merge as necessary.  tm_merge
+	creates the data and all necessary triggers.
+
+
+
+

@@ -1,0 +1,47 @@
+#!/bin/csh -f
+
+echo "###############################################################################"
+echo "#######"
+echo "#######     RUNNING THE UNIT TEST FOR PLANCK AUX PIPELINE"
+echo "#######"
+echo "###############################################################################"
+
+
+set system = "planckaux"
+
+source unittest.setup.csh
+if ( $status != 0 ) exit $status
+
+set TEST_DATA_TGZ = "planckaux-1.0_test_data.tar.gz"
+set OUTREF_TGZ    = "planckaux-1.0_outref.tar.gz"
+
+if ( ! $?DO_NOT_RECREATE_DATA ) then
+   source unittest.data.csh
+   if ( $status != 0 ) exit $status
+endif
+
+foreach trigger (`/bin/ls $L1_ARCHIVE/ifts/inbox.tmp/* | /bin/sort`)
+	mv $trigger $L1_ARCHIVE/ifts/inbox/
+	set trigger = `basename $trigger`
+	echo "###############################################################################"
+	echo "#######     "
+	echo "#######     Testing $trigger"
+	echo "#######     "
+	../aux.pl -trigger=$trigger
+	@ exit_status = $?
+	echo "#######     exit status from aux.pl was $exit_status"
+	echo "###############################################################################"
+	echo
+end  # foreach trigger
+
+echo "#######     "
+echo "###############################################################################"
+echo "#######     "
+echo "#######     Done.  Moving aux to out/"
+echo "#######     "
+
+mv $L1_ARCHIVE/aux out/
+
+exit
+
+# last line

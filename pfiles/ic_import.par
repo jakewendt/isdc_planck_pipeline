@@ -1,0 +1,26 @@
+#######################################################################
+#                                                                     #
+#                    GENEVA ASTRONOMICAL DATA CENTRE                  #
+#                                                                     #
+#                               IC IMPORT                             #
+#                                                                     #
+#           IMPORTS IC FITS FILES INTO THE IC_DB DIRECTORY AND SETS   #
+#                        THE VERSION NUMBER                           #
+#                                                                     #
+#                                                                     #
+#  File:      ic_import.par                                           #
+#  Version:   1.0                                                     #
+#  Component: ic_import         			              #
+#                                                                     #
+#  Authors:   Reiner Rohlfs (RR)                                      #
+#             GADC                                                    #
+#                                                                     #
+#  Purpose:   Parameter file of the executable to import IC files     #
+#                                                                     #
+#  Revision History:                                                  #
+#                                                                     #
+#  version 1.0: 24/11/05 RR  First version                            #
+#                                                                     #
+#######################################################################
+InputFile,s,q,,,,"Input IC file to be imported"
+IcNames,s,h,hk_parameter hk_packet,,,"list of IC names, accepted and processed by the program"

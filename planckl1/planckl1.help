@@ -1,0 +1,30 @@
+
+		Planck Level 1 Pipeline Version %VERSION%
+
+
+
+l1-crontab
+
+	This cron job runs every 5 minutes (unless the user modified this) 
+	and calls l1_start.pl
+
+
+l1_start.pl
+
+	l1_start.pl looks in ${L1_ARCHIVE}/tm/trigger/ for files and, if 
+	found, passes the first one to l1.pl.
+
+
+l1.pl -trigger=TRIGGER_FILE
+
+	l1.pl parses the trigger's filename.  If the filename does not match
+	the expected format, it is moved to the trigger.bad/ directory.
+	Otherwise, the parsed information is used to create the parameters
+	for calling tmu and hk_conversion and the other execs.
+
+
+
+
+
+
+

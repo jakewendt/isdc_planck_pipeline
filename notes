@@ -1,0 +1,28 @@
+
+FYI!!!
+
+These tests have only been run successfully on the isdclin machines.  The binaries are not compiled for solaris.
+
+
+
+
+
+
+gzip or not?
+
+write-protect or not?
+
+directory names?
+
+variable names? (they're all changable so doesn't matter
+eval `envv set PIPELINES ${WORK_ENV}/pipelines`
+eval `envv set LOG_DIR   ${L1_ARCHIVE}/logs`
+eval `envv set CRON_LOGS ${L1_ARCHIVE}/cronlogs`
+eval `envv set AUX_INPUT ${L1_ARCHIVE}/ifts/inbox`
+eval `envv set TM_INPUT  ${L1_ARCHIVE}/tm/trigger`
+
+
+cron log names?
+
+
+

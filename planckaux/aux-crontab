@@ -1,0 +1,33 @@
+#-----------------------------------------------------------------------------
+# Name:      
+# Purpose:   Run by cron for pre-scheduled actions
+# Date:      
+# Author:    Jake Wendt
+#
+# Revisions:
+#
+#-----------------------------------------------------------------------------
+#
+#-----------------------------------------------------------------------------
+# General Information
+#-----------------------------------------------------------------------------
+# WARNING: there should be no blank lines!!
+#
+# Command to update backup file:  crontab -l > cronFileIsdcul15-02
+#
+# Syntax:
+#
+# minute  hour  mday  month    wday         action
+#  0-59   0-23  1-31  1-12   0-6 (0=Sun)
+#
+#-----------------------------------------------------------------------------
+# Cron Jobs
+#-----------------------------------------------------------------------------
+#
+# 
+  * *  *  *  * . /home/isdc_guest/isdc_int/planck/plancklib/op_lin_init; /home/isdc_guest/isdc_int/planck/planckaux/aux_start.pl
+#	00,05,10,15,20,25,30,35,40,45,50,55 *  *  *  * . /home/isdc_guest/isdc_int/planck/plancklib/op_lin_init; /home/isdc_guest/isdc_int/planck/planckaux/aux_start.pl
+#
+#
+#
+# Last line

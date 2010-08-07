@@ -1,0 +1,71 @@
+#!/bin/csh -f
+
+echo "###############################################################################"
+echo "#######"
+echo "#######     RUNNING THE UNIT TEST FOR PLANCK LEVEL 1 PIPELINE"
+echo "#######"
+echo "###############################################################################"
+
+
+set system = "planckl1"
+
+source unittest.setup.csh
+if ( $status != 0 ) exit $status
+
+set TEST_DATA_TGZ = "planckl1-1.0_test_data.tar.gz"
+set OUTREF_TGZ    = "planckl1-1.0_outref.tar.gz"
+
+if ( ! $?DO_NOT_RECREATE_DATA ) then
+   source unittest.data.csh
+   if ( $status != 0 ) exit $status
+endif
+
+	/bin/rm -f test_data/tm/trigger/00_0000\#04_27_04\#1538.000.fits	#	~528 fits_toi files
+#	/bin/rm -f test_data/tm/trigger/00_0000\#04_27_04\#1540.000.fits		#	quite large
+	/bin/rm -f test_data/tm/trigger/00_0000\#23_22_05\#1538.000.fits	#	~528 fits_toi files
+#	/bin/rm -f test_data/tm/trigger/00_0000\#23_22_05\#1540.000.fits		#	quite large
+#	/bin/rm -f test_data/tm/trigger/00_0001\#00_22_05\#1538.000.fits	#	~528 fits_toi files
+#	/bin/rm -f test_data/tm/trigger/00_0001\#00_22_05\#1540.000.fits
+#	/bin/rm -f test_data/tm/trigger/00_0001\#01_22_05\#1538.000.fits
+#	/bin/rm -f test_data/tm/trigger/00_0001\#01_22_05\#1540.000.fits
+#	/bin/rm -f test_data/tm/trigger/00_0001\#01_19_46\#1538.000.fits	#	~528 fits_toi files
+#	/bin/rm -f test_data/tm/trigger/00_0001\#01_19_46\#1540.000.fits	#	big tm file, but only ~25 fits_toi files
+#	/bin/rm -f test_data/tm/trigger/00_2485\#03_14_07\#1538.000.fits
+
+#	mkdir $L1_ARCHIVE/logs
+
+foreach trigger (`/bin/ls $L1_ARCHIVE/tm/trigger/* | /bin/sort`)
+	set trigger = `basename $trigger`
+#	setenv COMMONLOGFILE +$L1_ARCHIVE/logs/$trigger.log
+	echo "###############################################################################"
+	echo "#######     "
+	echo "#######     Testing $trigger"
+	echo "#######     "
+	../l1.pl -trigger=$trigger
+	@ exit_status = $status
+	echo "#######     exit status from l1.pl was $exit_status"
+	echo "###############################################################################"
+	echo
+
+	if ( $exit_status > 0 ) then
+		switch ( $trigger )
+			case 00_0001#01_22_05#1538.000.fits:	#	empty file return -7004 and then 65280
+			case 00_0001#01_22_05#1540.000.fits:	#	empty file return -7004 and then 65280
+				breaksw
+			default:
+				exit 1
+		endsw
+	endif
+end  # foreach trigger
+
+echo "#######     "
+echo "###############################################################################"
+echo "#######     "
+echo "#######     Done.  Moving fits_toi to out/"
+echo "#######     "
+
+mv test_data/fits_toi out/
+
+exit
+
+# last line

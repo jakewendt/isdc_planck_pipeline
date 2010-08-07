@@ -1,0 +1,6 @@
+= ISDC Planck Pipeline
+
+This is a collection of scripts from around 2007.  
+Out of context, they are pretty worthless.
+Nevertheless, here they are.
+

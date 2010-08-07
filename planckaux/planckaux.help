@@ -1,0 +1,30 @@
+
+		Planck Aux Pipeline Version %VERSION%
+
+
+
+aux-crontab
+
+	This cron job runs every 5 minutes (unless the user modified this) 
+	and calls aux_start.pl
+
+
+aux_start.pl
+
+	aux_start.pl looks in ${L1_ARCHIVE}/ifts/inbox/ for files and, if 
+	found, passes the first one to aux.pl.
+
+
+aux.pl -trigger=INPUT_FILE
+
+	aux.pl parses the trigger's filename.  If the filename does not match
+	the expected format, it is moved to the inbox.bad/ directory.
+	Otherwise, the parsed information is used to create the parameters
+	for calling aux_extraction and fits2dmc.
+
+
+
+
+
+
+

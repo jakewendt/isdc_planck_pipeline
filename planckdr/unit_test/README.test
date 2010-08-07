@@ -1,0 +1,48 @@
+#!/bin/csh -f
+
+echo "###############################################################################"
+echo "#######"
+echo "#######     RUNNING THE UNIT TEST FOR PLANCK DATA RECEIPT PIPELINE"
+echo "#######"
+echo "###############################################################################"
+
+
+set system = "planckdr"
+
+source unittest.setup.csh
+if ( $status != 0 ) exit $status
+
+#set TEST_DATA_TGZ = "planckdr-1.0_test_data.tar.gz"
+#set OUTREF_TGZ    = "planckdr-1.0_outref.tar.gz"
+
+if ( ! $?DO_NOT_RECREATE_DATA ) then
+   source unittest.data.csh
+   if ( $status != 0 ) exit $status
+endif
+
+echo $L1_ARCHIVE/tm/trigger
+
+foreach trigger (`/bin/ls $L1_ARCHIVE/tm/trigger/* | /bin/sort`)
+	set trigger = `basename $trigger`
+	echo "###############################################################################"
+	echo "#######     "
+	echo "#######     Testing $trigger"
+	echo "#######     "
+	../dr.pl 
+	@ exit_status = $?
+	echo "#######     exit status from dr.pl was $exit_status"
+	echo "###############################################################################"
+	echo
+
+end  # foreach trigger
+
+echo "#######     "
+echo "###############################################################################"
+echo "#######     "
+echo "#######     Done."
+echo "#######     "
+
+
+exit
+
+# last line
